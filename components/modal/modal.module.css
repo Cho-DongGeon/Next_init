@@ -1,0 +1,87 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 90%;
+  min-width: 80%;
+  text-align: center;
+}
+.modal-card p {
+  margin: 0;
+  font-size: 16px;
+  color: #020318;
+  padding: 20px;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  border-top: 1px solid #e0e0e0;
+}
+.modal-btns button {
+  width: 100%;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 13px 0;
+  border: 0;
+  background-color: transparent;
+}
+.modal-btns button:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Toast */
+.toast-wrapper {
+  position: fixed;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1100;
+  width: 80%;
+}
+
+.toast-card {
+  background: #333;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  --duration: 3000ms;
+  animation: slide-up-fade var(--duration) ease forwards;
+}
+
+.autoRowInsert {
+  white-space: pre-line;
+}
+
+@keyframes slide-up-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
