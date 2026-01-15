@@ -12,7 +12,7 @@ export default function Page() {
   };
 
   const handleShowConfirm = async () => {
-    const ok = await confirm('alert 창입니다.');
+    const ok = await confirm('confirm 창입니다.');
 
     ok ? alert('True 누름', ok) : alert('False 누름', ok);
   };

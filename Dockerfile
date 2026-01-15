@@ -37,16 +37,16 @@ ENV NODE_ENV=production \
 RUN addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 nextjs
 
-# ✅ 정적 파일을 먼저 복사 (소유자 변경 전)
+# 정적 파일을 먼저 복사 (소유자 변경 전)
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# ✅ 소유자 변경을 한 번에
+# 소유자 변경을 한 번에
 RUN chown -R nextjs:nodejs /app
 
 USER nextjs
 EXPOSE 3000
 
-# ✅ 0.0.0.0으로 바인딩하도록 명시적 설정
+# 0.0.0.0으로 바인딩하도록 명시적 설정
 CMD ["node", "server.js"]

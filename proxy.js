@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export function middleware(request) {
+export function proxy(request) {
   // const { pathname } = request.nextUrl;
   // console.log('################미들웨어실행###############', pathname);
   // const accessToken = request.cookies.get('checkly_WEB_access_token')?.value;
