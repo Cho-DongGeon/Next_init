@@ -1,53 +1,77 @@
 'use client';
 
 import { createContext, useState } from 'react';
-import Alert from './Alert';
-import Confirm from './Confirm';
-import Toast from './Toast';
+import { toast as sonnerToast } from 'sonner';
+
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 
 export const ModalCtx = createContext({
-  alert: () => Promise.resolve(),
-  confirm: () => Promise.resolve(false),
-  toast: () => {},
+  alert: async () => {},
+  confirm: async () => false,
 });
 
 export default function ModalProvider({ children }) {
-  const [modal, setModal] = useState(null); // { type, message, resolve } | null
+  const [modal, setModal] = useState(null);
 
   const alert = (message) => new Promise((res) => setModal({ type: 'alert', message, resolve: res }));
+
   const confirm = (message) => new Promise((res) => setModal({ type: 'confirm', message, resolve: res }));
-  const toast = (msg, duration = 3000) => setModal({ type: 'toast', message: msg, duration });
+
+  const toast = (message, duration = 2500, type = 'default') => {
+    if (type === 'success') {
+      sonnerToast.success(message, { duration });
+    } else if (type === 'error') {
+      sonnerToast.error(message, { duration });
+    } else if (type === 'warning') {
+      sonnerToast(message, { duration });
+    } else {
+      sonnerToast(message, { duration });
+    }
+  };
+
   const close = () => setModal(null);
 
   return (
     <ModalCtx.Provider value={{ alert, confirm, toast }}>
       {children}
 
-      {modal?.type === 'alert' && (
-        <Alert
-          message={modal.message}
-          onClose={() => {
-            modal.resolve();
-            close();
-          }}
-        />
-      )}
+      <AlertDialog open={!!modal} onOpenChange={close}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{modal?.type === 'confirm' ? '확인' : '알림'}</AlertDialogTitle>
+            <AlertDialogDescription className="whitespace-pre-line">{modal?.message}</AlertDialogDescription>
+          </AlertDialogHeader>
 
-      {modal?.type === 'confirm' && (
-        <Confirm
-          message={modal.message}
-          onOk={() => {
-            modal.resolve(true);
-            close();
-          }}
-          onCancel={() => {
-            modal.resolve(false);
-            close();
-          }}
-        />
-      )}
+          <AlertDialogFooter>
+            {modal?.type === 'confirm' && (
+              <AlertDialogCancel
+                onClick={() => {
+                  modal.resolve(false);
+                  close();
+                }}>
+                아니오
+              </AlertDialogCancel>
+            )}
 
-      {modal?.type === 'toast' && <Toast message={modal.message} duration={modal.duration} onClose={close} />}
+            <AlertDialogAction
+              onClick={() => {
+                modal.resolve(modal.type === 'confirm');
+                close();
+              }}>
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </ModalCtx.Provider>
   );
 }
