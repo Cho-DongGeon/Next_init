@@ -188,15 +188,6 @@ select {
   background-color: transparent;
 }
 
-input[type='text'],
-input[type='password'] {
-  border: 1px solid #ccc;
-  padding: 8px 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: 'Pretendard', sans-serif;
-}
-
 a {
   text-decoration: none;
   color: inherit;
