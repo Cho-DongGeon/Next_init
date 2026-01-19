@@ -144,6 +144,7 @@ html {
 }
 html {
   height: 100%;
+  scrollbar-gutter: stable;
 }
 /* 불필요한 reset 최소화: body만 margin 0으로 */
 body {
