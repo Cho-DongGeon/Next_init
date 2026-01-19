@@ -25,11 +25,11 @@ export default function TableUIPage() {
       </div>
 
       {/* 테이블 영역 */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <DataTable />
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <RowspanDataTable />
       </div>
     </div>
