@@ -13,31 +13,6 @@ export function DateRangePicker({ dateRange, setDateRange, className }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [hoverDate, setHoverDate] = React.useState(null);
 
-  const handleDateSelect = (selectedDate) => {
-    if (!dateRange.from) {
-      // 시작 날짜 선택
-      setDateRange({ from: selectedDate, to: null });
-    } else if (!dateRange.to) {
-      // 종료 날짜 선택
-      if (selectedDate < dateRange.from) {
-        // 시작 날짜보다 이전이면 시작/종료 바꾸기
-        setDateRange({ from: selectedDate, to: dateRange.from });
-        setIsOpen(false);
-      } else {
-        setDateRange({ from: dateRange.from, to: selectedDate });
-        setIsOpen(false);
-      }
-    } else {
-      // 새로 시작
-      setDateRange({ from: selectedDate, to: null });
-    }
-  };
-
-  const isDateInRange = (date) => {
-    if (!dateRange.from || !dateRange.to) return false;
-    return date >= dateRange.from && date <= dateRange.to;
-  };
-
   const formatDateRange = () => {
     if (!dateRange.from) {
       return '날짜 범위 선택';
