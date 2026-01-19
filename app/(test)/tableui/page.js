@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import DataTable from '@/components/common/DataTable';
 import { Button } from '@/components/ui/button';
+import RowspanDataTable from '@/components/common/RowspanDataTable';
 
 export default function TableUIPage() {
   const router = useRouter();
@@ -26,6 +27,10 @@ export default function TableUIPage() {
       {/* 테이블 영역 */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <DataTable />
+      </div>
+
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <RowspanDataTable />
       </div>
     </div>
   );

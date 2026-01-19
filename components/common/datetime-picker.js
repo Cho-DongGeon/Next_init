@@ -76,14 +76,14 @@ export function DateTimePicker({ date, setDate, className }) {
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={setIsOpen} modal={false}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           className={cn('justify-start text-left font-normal text-base', !date && 'text-muted-foreground', className)}>
-          <CalendarIcon className=" h-4 w-4" />
-          {date ? format(date, 'yyyy-MM-dd hh:mm a', { locale: ko }) : <span>Pick a date</span>}
-          <ChevronDown />
+          <CalendarIcon className="h-4 w-4" />
+          {date ? format(date, 'yyyy-MM-dd hh:mm a', { locale: ko }) : <span>날짜를 선택해주세요</span>}
+          <ChevronDown className="h-4 w-4 ml-auto" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -102,7 +102,7 @@ export function DateTimePicker({ date, setDate, className }) {
             <SelectTrigger className="w-[60px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper" className="max-h-[200px]">
               {hours12.map((hour) => (
                 <SelectItem key={hour} value={hour.toString()}>
                   {hour.toString().padStart(2, '0')}
@@ -115,7 +115,7 @@ export function DateTimePicker({ date, setDate, className }) {
             <SelectTrigger className="w-[60px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper" className="max-h-[200px]">
               {minutes.map((minute) => (
                 <SelectItem key={minute} value={minute.toString()}>
                   {minute.toString().padStart(2, '0')}
@@ -127,7 +127,7 @@ export function DateTimePicker({ date, setDate, className }) {
             <SelectTrigger className="w-[70px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper">
               <SelectItem value="AM">오전</SelectItem>
               <SelectItem value="PM">오후</SelectItem>
             </SelectContent>

@@ -101,7 +101,7 @@ export function SimpleTimePicker({ time, setTime, className, use24Hour = false }
           className={cn('justify-start text-left font-normal text-base', !time && 'text-muted-foreground', className)}>
           <Clock className="h-4 w-4" />
           <span>{formatDisplayTime()}</span>
-          <ChevronDown />
+          <ChevronDown className="h-4 w-4 ml-auto" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-3" align="start">
@@ -112,7 +112,7 @@ export function SimpleTimePicker({ time, setTime, className, use24Hour = false }
             <SelectTrigger className="w-[60px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[200px]">
               {(use24Hour ? hours24 : hours12).map((hour) => (
                 <SelectItem key={hour} value={hour.toString()}>
                   {hour.toString().padStart(2, '0')}
@@ -125,7 +125,7 @@ export function SimpleTimePicker({ time, setTime, className, use24Hour = false }
             <SelectTrigger className="w-[60px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-[200px]">
               {minutes.map((minute) => (
                 <SelectItem key={minute} value={minute.toString()}>
                   {minute.toString().padStart(2, '0')}
@@ -134,17 +134,15 @@ export function SimpleTimePicker({ time, setTime, className, use24Hour = false }
             </SelectContent>
           </Select>
           {!use24Hour && (
-            <>
-              <Select value={currentPeriod} onValueChange={(value) => handleTimeChange('period', value)}>
-                <SelectTrigger className="w-[70px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="AM">오전</SelectItem>
-                  <SelectItem value="PM">오후</SelectItem>
-                </SelectContent>
-              </Select>
-            </>
+            <Select value={currentPeriod} onValueChange={(value) => handleTimeChange('period', value)}>
+              <SelectTrigger className="w-[70px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="AM">오전</SelectItem>
+                <SelectItem value="PM">오후</SelectItem>
+              </SelectContent>
+            </Select>
           )}
         </div>
       </PopoverContent>
