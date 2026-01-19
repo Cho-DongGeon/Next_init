@@ -84,7 +84,16 @@ export function DateTimePicker({ date, setDate, className }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <Calendar mode="single" selected={date} onSelect={handleDateSelect} initialFocus locale={ko} />
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={handleDateSelect}
+          initialFocus
+          locale={ko}
+          modifiersClassNames={{
+            today: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+          }}
+        />
         <div className="flex items-center gap-2 border-t p-3">
           <Select value={currentHour.toString()} onValueChange={(value) => handleTimeChange('hours', value)}>
             <SelectTrigger className="w-[60px]">

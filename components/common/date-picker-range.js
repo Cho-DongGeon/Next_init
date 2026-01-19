@@ -41,6 +41,9 @@ export function DateRangePicker({ dateRange, setDateRange, className }) {
             onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
             initialFocus
             locale={ko}
+            modifiersClassNames={{
+              today: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+            }}
           />
         </div>
       </PopoverContent>
