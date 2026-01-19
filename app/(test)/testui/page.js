@@ -12,7 +12,9 @@ import { useState } from 'react';
 
 import MultiSelectSearch from '@/components/common/MutiSelectSearch';
 import ImgUpload from '@/components/common/ImgUpload';
-import { Calendar24 as DateTimePicker } from '@/components/common/DateTimePicker'; // ✅ 수정
+import { DateTimePicker } from '@/components/common/datetime-picker';
+import { SimpleTimePicker } from '@/components/common/simple-time-picker';
+import { DateRangePicker } from '@/components/common/date-picker-range';
 
 export default function Home() {
   const router = useRouter();
@@ -33,6 +35,10 @@ export default function Home() {
   const removeOption = (value) => {
     setSelectedValues((prev) => prev.filter((v) => v !== value));
   };
+
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState('09:30');
+  const [dateRange, setDateRange] = useState({ from: null, to: null });
 
   return (
     <div>
@@ -66,7 +72,7 @@ export default function Home() {
               type="text"
               placeholder="Input 스타일"
               className="
-                  text-base h-12
+                  text-base h-10
                   disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed
                   read-only:bg-blue-50 read-only:cursor-not-allowed
                 "
@@ -78,7 +84,7 @@ export default function Home() {
                 placeholder="Input 스타일"
                 readOnly={isReadonly}
                 className="
-                  text-base h-12
+                  text-base h-10
                   disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed
                   read-only:bg-blue-50 read-only:cursor-not-allowed
                 "
@@ -91,7 +97,7 @@ export default function Home() {
                 type="text"
                 placeholder="Input 스타일"
                 disabled={isDisabled}
-                className="text-base h-12 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="text-base h-10 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -105,7 +111,7 @@ export default function Home() {
               <p className="text-base text-gray-500 mb-4">단일 선택 드롭다운</p>
             </div>
             <Select>
-              <SelectTrigger className="w-full text-base h-12">
+              <SelectTrigger className="w-full text-base h-10">
                 <SelectValue placeholder="Select 스타일" />
               </SelectTrigger>
               <SelectContent>
@@ -197,7 +203,7 @@ export default function Home() {
           </div>
 
           {/* datepicker */}
-          <div className="space-y-4">
+          <div>
             <div>
               <Label htmlFor="datepicker" className="text-lg font-semibold text-gray-900 mb-2 block">
                 Date Picker
@@ -205,7 +211,31 @@ export default function Home() {
               <p className="text-base text-gray-500 mb-4">날짜 + 시간 컴포넌트</p>
             </div>
 
-            <DateTimePicker />
+            <DateTimePicker date={date} setDate={setDate} />
+          </div>
+
+          {/* timepicker */}
+          <div>
+            <div>
+              <Label htmlFor="timepicker" className="text-lg font-semibold text-gray-900 mb-2 block">
+                Time Picker
+              </Label>
+              <p className="text-base text-gray-500 mb-4">시간 컴포넌트</p>
+            </div>
+
+            <SimpleTimePicker time={time} setTime={setTime} />
+          </div>
+
+          {/* datepicker range */}
+          <div>
+            <div>
+              <Label htmlFor="datepickerRange" className="text-lg font-semibold text-gray-900 mb-2 block">
+                Date Picker Range
+              </Label>
+              <p className="text-base text-gray-500 mb-4">날짜기간 선택 컴포넌트</p>
+            </div>
+
+            <DateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
           </div>
         </section>
       </div>
