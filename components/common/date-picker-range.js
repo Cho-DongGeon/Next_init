@@ -1,9 +1,11 @@
+//https://github.com/huybuidac/shadcn-datetime-picker
 'use client';
 
 import * as React from 'react';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -28,24 +30,23 @@ export function DateRangePicker({ dateRange, setDateRange, className }) {
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className={cn('justify-start text-left font-normal', !dateRange.from && 'text-muted-foreground', className)}>
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          className={cn('justify-start text-left font-normal text-base', !dateRange.from && 'text-muted-foreground', className)}>
+          <CalendarIcon />
           {formatDateRange()}
+          <ChevronDown />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <div className="p-4">
-          <Calendar
-            mode="range"
-            selected={{ from: dateRange.from, to: dateRange.to }}
-            onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
-            initialFocus
-            locale={ko}
-            modifiersClassNames={{
-              today: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
-            }}
-          />
-        </div>
+        <Calendar
+          mode="range"
+          selected={{ from: dateRange.from, to: dateRange.to }}
+          onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
+          initialFocus
+          locale={ko}
+          modifiersClassNames={{
+            today: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+          }}
+        />
       </PopoverContent>
     </Popover>
   );

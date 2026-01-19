@@ -1,7 +1,8 @@
+//https://github.com/huybuidac/shadcn-datetime-picker
 'use client';
 
 import * as React from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -97,9 +98,10 @@ export function SimpleTimePicker({ time, setTime, className, use24Hour = false }
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className={cn('justify-start text-left font-normal', !time && 'text-muted-foreground', className)}>
+          className={cn('justify-start text-left font-normal text-base', !time && 'text-muted-foreground', className)}>
           <Clock className="h-4 w-4" />
           <span>{formatDisplayTime()}</span>
+          <ChevronDown />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-3" align="start">
