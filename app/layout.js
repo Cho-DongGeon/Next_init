@@ -4,8 +4,8 @@
 // shadcn/ui 설치 및 Tailwind CSS 설정이 완료되었다고 가정하고 작성된 코드입니다.
 // 아이콘은 lucide-react 라이브러리를 사용합니다. (https://lucide.dev/)
 
-import '@/styles/custom-shadcn.css';
 import '@/styles/global.css';
+import '@/styles/custom-shadcn.css';
 
 // Toaster (sonner)
 import { Toaster } from 'sonner';
@@ -21,7 +21,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body>
-        <ModalProvider>{children}</ModalProvider>
+        <ModalProvider>
+          <div className="container mx-auto">{children}</div>
+        </ModalProvider>
 
         {/* Toast 전역 렌더링 */}
         <Toaster position="top-center" />
