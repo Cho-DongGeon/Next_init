@@ -6,6 +6,7 @@
 
 import '@/styles/global.css';
 import '@/styles/custom-shadcn.css';
+import '@/lib/seqLogger'
 
 // Toaster (sonner)
 import { Toaster } from 'sonner';
