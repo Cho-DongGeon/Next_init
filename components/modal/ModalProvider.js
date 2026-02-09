@@ -17,6 +17,7 @@ import {
 export const ModalCtx = createContext({
   alert: async () => {},
   confirm: async () => false,
+  custom: async () => {},
 });
 
 export default function ModalProvider({ children }) {
@@ -25,6 +26,10 @@ export default function ModalProvider({ children }) {
   const alert = (message) => new Promise((res) => setModal({ type: 'alert', message, resolve: res }));
 
   const confirm = (message) => new Promise((res) => setModal({ type: 'confirm', message, resolve: res }));
+
+  // custom: message, description, actions: [{label, value, className}]
+  const custom = (message, description, actions) =>
+    new Promise((res) => setModal({ type: 'custom', message, description, actions, resolve: res }));
 
   const toast = (message, duration = 2500, type = 'default') => {
     if (type === 'success') {
@@ -41,17 +46,35 @@ export default function ModalProvider({ children }) {
   const close = () => setModal(null);
 
   return (
-    <ModalCtx.Provider value={{ alert, confirm, toast }}>
+    <ModalCtx.Provider value={{ alert, confirm, toast, custom }}>
       {children}
 
       <AlertDialog open={!!modal} onOpenChange={close}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{modal?.type === 'confirm' ? '확인' : '알림'}</AlertDialogTitle>
-            <AlertDialogDescription className="whitespace-pre-line">{modal?.message}</AlertDialogDescription>
+            <AlertDialogTitle>
+              {modal?.type === 'confirm' ? '확인' : modal?.type === 'custom' ? modal?.message : '알림'}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="whitespace-pre-line">
+              {modal?.type === 'custom' ? modal?.description : modal?.message}
+            </AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter>
+            {modal?.type === 'custom' &&
+              Array.isArray(modal?.actions) &&
+              modal.actions.map((action, idx) => (
+                <button
+                  key={idx}
+                  className={action.className}
+                  onClick={() => {
+                    modal.resolve(action.value);
+                    close();
+                  }}
+                  type="button">
+                  {action.label}
+                </button>
+              ))}
             {modal?.type === 'confirm' && (
               <AlertDialogCancel
                 onClick={() => {
@@ -62,13 +85,15 @@ export default function ModalProvider({ children }) {
               </AlertDialogCancel>
             )}
 
-            <AlertDialogAction
-              onClick={() => {
-                modal.resolve(modal.type === 'confirm');
-                close();
-              }}>
-              확인
-            </AlertDialogAction>
+            {modal?.type !== 'custom' && (
+              <AlertDialogAction
+                onClick={() => {
+                  modal.resolve(modal.type === 'confirm');
+                  close();
+                }}>
+                확인
+              </AlertDialogAction>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
