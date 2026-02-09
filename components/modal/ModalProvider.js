@@ -49,54 +49,70 @@ export default function ModalProvider({ children }) {
     <ModalCtx.Provider value={{ alert, confirm, toast, custom }}>
       {children}
 
-      <AlertDialog open={!!modal} onOpenChange={close}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {modal?.type === 'confirm' ? '확인' : modal?.type === 'custom' ? modal?.message : '알림'}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="whitespace-pre-line">
-              {modal?.type === 'custom' ? modal?.description : modal?.message}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
+      {/* custom 모달만 별도로 렌더링 */}
+      {modal?.type === 'custom' && (
+        <AlertDialog
+          open={!!modal}
+          onOpenChange={(open) => {
+            if (!open) setModal(null);
+          }}>
+          <AlertDialogContent className="rounded-2xl">
+            <AlertDialogHeader>
+              <AlertDialogTitle>{modal?.message}</AlertDialogTitle>
+              <AlertDialogDescription className="whitespace-pre-line">{modal?.description}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex flex-row gap-2">
+              {Array.isArray(modal?.actions) &&
+                modal.actions.map((action, idx) => (
+                  <button
+                    key={idx}
+                    className={action.className + ' flex-1'}
+                    onClick={() => {
+                      modal.resolve(action.value);
+                      setModal(null);
+                    }}
+                    type="button">
+                    {action.label}
+                  </button>
+                ))}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
 
-          <AlertDialogFooter className={modal?.type === 'custom' ? 'flex flex-row gap-2' : ''}>
-            {modal?.type === 'custom' &&
-              Array.isArray(modal?.actions) &&
-              modal.actions.map((action, idx) => (
-                <button
-                  key={idx}
-                  className={action.className + ' flex-1'}
+      {/* 기존 alert/confirm 모달 */}
+      {(modal?.type === 'alert' || modal?.type === 'confirm') && (
+        <AlertDialog
+          open={!!modal}
+          onOpenChange={(open) => {
+            if (!open) setModal(null);
+          }}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{modal?.type === 'confirm' ? '확인' : '알림'}</AlertDialogTitle>
+              <AlertDialogDescription className="whitespace-pre-line">{modal?.message}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              {modal?.type === 'confirm' && (
+                <AlertDialogCancel
                   onClick={() => {
-                    modal.resolve(action.value);
-                    close();
-                  }}
-                  type="button">
-                  {action.label}
-                </button>
-              ))}
-            {modal?.type === 'confirm' && (
-              <AlertDialogCancel
-                onClick={() => {
-                  modal.resolve(false);
-                  close();
-                }}>
-                아니오
-              </AlertDialogCancel>
-            )}
-
-            {modal?.type !== 'custom' && (
+                    modal.resolve(false);
+                    setModal(null);
+                  }}>
+                  아니오
+                </AlertDialogCancel>
+              )}
               <AlertDialogAction
                 onClick={() => {
                   modal.resolve(modal.type === 'confirm');
-                  close();
+                  setModal(null);
                 }}>
                 확인
               </AlertDialogAction>
-            )}
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </ModalCtx.Provider>
   );
 }
