@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { ModalCtx } from '@/components/modal/ModalProvider';
 
 export default function Page() {
-  const { alert, confirm, toast } = useContext(ModalCtx);
+  const { alert, confirm, toast, custom } = useContext(ModalCtx);
 
   const handleShowModal = async () => {
     await alert('alert 창입니다.');
@@ -18,6 +18,17 @@ export default function Page() {
 
   const handleShowToast = async () => {
     toast('Toast 창입니다.', 2000);
+  };
+
+  const handleShowCustom = async () => {
+    await custom(
+      '휴대폰 기기의 앱 알림이 꺼져있어요',
+      '스마트 고시원 앱을 열지 않고 휴대폰 잠금화면에서 알림을 바로 확인하려면, 기기 설정에서 알림을 허용해주세요.',
+      [
+        { label: '닫기', value: 'close', className: 'bg-slate-100 text-slate-700 rounded-lg px-4 py-2' },
+        { label: '설정하러가기', value: 'setting', className: 'bg-blue-500 text-white rounded-lg px-4 py-2' },
+      ],
+    );
   };
 
   return (
@@ -36,6 +47,12 @@ export default function Page() {
             className="px-8 py-4 text-lg font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
             onClick={handleShowConfirm}>
             Confirm
+          </button>
+
+          <button
+            className="px-8 py-4 text-lg font-semibold text-white bg-green-600 hover:bg-green-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
+            onClick={handleShowCustom}>
+            Custom
           </button>
 
           <button

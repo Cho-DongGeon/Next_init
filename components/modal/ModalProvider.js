@@ -60,13 +60,13 @@ export default function ModalProvider({ children }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter>
+          <AlertDialogFooter className={modal?.type === 'custom' ? 'flex flex-row gap-2' : ''}>
             {modal?.type === 'custom' &&
               Array.isArray(modal?.actions) &&
               modal.actions.map((action, idx) => (
                 <button
                   key={idx}
-                  className={action.className}
+                  className={action.className + ' flex-1'}
                   onClick={() => {
                     modal.resolve(action.value);
                     close();
