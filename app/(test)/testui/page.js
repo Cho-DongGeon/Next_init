@@ -14,7 +14,7 @@ import MultiSelectSearch from '@/components/common/MutiSelectSearch';
 import ImgUpload from '@/components/common/ImgUpload';
 import { DateTimePicker } from '@/components/common/datetime-picker';
 import { SimpleTimePicker } from '@/components/common/simple-time-picker';
-import { DateRangePicker } from '@/components/common/date-picker-range';
+import DateRangePicker from '@/components/common/date-picker-range';
 
 export default function Home() {
   const router = useRouter();
@@ -235,7 +235,7 @@ export default function Home() {
               <p className="text-base text-gray-500 mb-4">날짜기간 선택 컴포넌트</p>
             </div>
 
-            <DateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+            <DateRangePicker value={dateRange} onChange={setDateRange} />
           </div>
         </section>
       </div>
